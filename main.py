@@ -59,5 +59,13 @@ def article(id):
     return render_template("article.html", article=article)
 
 
+@app.route('/article<int:id>/del')
+def del_article(id):
+    article = Article.query.get(id)
+    db.session.delete(article)
+    db.session.commit()
+    return redirect('/news')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
