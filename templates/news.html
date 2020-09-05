@@ -6,4 +6,23 @@
 
 {% block body %}
 <h3>Новости</h3>
+
+{% if articles|length == 0 %}
+  <h4>Статей нет на сайте, но скоро появятся</h4>
+
+{% else %}
+
+  {% for article in articles %}
+
+    <div class="alert alert-primary mt-3" role="alert">
+      <h3><a href="/article{{ article.id }}">{{ article.title }}</a></h3>
+      <hr>
+      <p>{{ article.text }}</p>
+    </div>
+
+  {% endfor %}
+
+{% endif %}
+
+
 {% endblock %}

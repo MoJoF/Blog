@@ -14,13 +14,17 @@ class Article(db.Model):
     def __repr__(self):
         return "<Article %r>" % self.id
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route('/news')
+
+@app.route('/news', methods=['GET'])
 def news():
-    return render_template("news.html")
+    articles = Article.query.order_by(Article.id.desc()).all()
+
+    return render_template("news.html", articles=articles)
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -42,9 +46,17 @@ def create():
     else:
         return render_template("create.html")
 
+
 @app.route('/success')
 def success_add():
     return render_template("success.html")
+
+
+@app.route('/article<int:id>', methods=['POST', 'GET'])
+def article(id):
+    article = Article.query.get(id)
+
+    return render_template("article.html", article=article)
 
 
 if __name__ == '__main__':
