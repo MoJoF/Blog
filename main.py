@@ -67,5 +67,24 @@ def del_article(id):
     return redirect('/news')
 
 
+@app.route('/article<int:id>/edit', methods=['GET', 'POST'])
+def edit_article(id):
+    article = Article.query.get(id)
+
+    if request.method == 'POST':
+        article.title = request.form['title']
+        article.text = request.form['text']
+
+        try:
+            db.session.commit()
+            return redirect('/news')
+
+        except:
+            return "При редактировании статьи произошла ошибка"
+
+    else:
+        return render_template("edit.html", article=article)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
