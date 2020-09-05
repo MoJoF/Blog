@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -22,6 +22,10 @@ def index():
 def news():
     return render_template("news.html")
 
+
+@app.route('/create')
+def create():
+    return render_template("create.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
